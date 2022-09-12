@@ -1,7 +1,11 @@
 == WARNING! THIS IS AN MODIFIED VERSION OF SEABIOS ==
 
-  Changed keyboard layout to NEO2 Layout to have NEO2 Layout in DOS ;-)
+  Changed keyboard layout to NEO2 Layout to have NEO2 Layout in DOS
   (http://www.neo-layout.org)
+
+  Still experimental, only support for Layers 1-3. Layer 4 might follow
+  Layers 5-8 most likely don't make sense due to lack of UTF-8 support
+  in DOS ;-)
 
 == ORIGINAL README FOLLOWS ==
 
