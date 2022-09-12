@@ -95,6 +95,7 @@ struct bios_data_area_s {
     u8 other_ac[4];
     // 40:B0
     u8 other_b0[5*16];
+    u8 neo_layer;			// TODO: might be not a good idea to just append something here. 
 } PACKED;
 
 // BDA floppy_recalibration_status bitdefs

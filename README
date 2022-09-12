@@ -1,3 +1,10 @@
+== WARNING! THIS IS AN MODIFIED VERSION OF SEABIOS ==
+
+  Changed keyboard layout to NEO2 Layout to have NEO2 Layout in DOS ;-)
+  (http://www.neo-layout.org)
+
+== ORIGINAL README FOLLOWS ==
+
 Welcome to the SeaBIOS project!  This project implements an X86 legacy
 bios that is built with standard GNU tools.
 

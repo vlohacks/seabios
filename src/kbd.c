@@ -272,66 +272,69 @@ handle_16(struct bregs *regs)
 #define none 0
 
 static struct scaninfo {
-    u16 normal;
-    u16 shift;
-    u16 control;
-    u16 alt;
+    u16 layer1;
+    u16 layer2;
+    u16 layer3;
+    u16 layer4;
 } scan_to_keycode[] VAR16 = {
     {   none,   none,   none,   none },
     { 0x011b, 0x011b, 0x011b, 0x01f0 }, /* escape */
-    { 0x0231, 0x0221,   none, 0x7800 }, /* 1! */
-    { 0x0332, 0x0340, 0x0300, 0x7900 }, /* 2@ */
-    { 0x0433, 0x0423,   none, 0x7a00 }, /* 3# */
-    { 0x0534, 0x0524,   none, 0x7b00 }, /* 4$ */
-    { 0x0635, 0x0625,   none, 0x7c00 }, /* 5% */
-    { 0x0736, 0x075e, 0x071e, 0x7d00 }, /* 6^ */
-    { 0x0837, 0x0826,   none, 0x7e00 }, /* 7& */
-    { 0x0938, 0x092a,   none, 0x7f00 }, /* 8* */
-    { 0x0a39, 0x0a28,   none, 0x8000 }, /* 9( */
-    { 0x0b30, 0x0b29,   none, 0x8100 }, /* 0) */
-    { 0x0c2d, 0x0c5f, 0x0c1f, 0x8200 }, /* -_ */
-    { 0x0d3d, 0x0d2b,   none, 0x8300 }, /* =+ */
+    { 0x0231, 0x02b0,   none, 0x7800 }, /* 1° */
+    { 0x0332, 0x03a7, 0x0300, 0x7900 }, /* 2§ */
+    { 0x0433,   none,   none, 0x7a00 }, /* 3  */
+    { 0x0534, 0x05bb,   none, 0x7b00 }, /* 4» */
+    { 0x0635, 0x06ab,   none, 0x7c00 }, /* 5« */
+    { 0x0736, 0x0724, 0x071e, 0x7d00 }, /* 6$ */
+    { 0x0837, 0x0880,   none, 0x7e00 }, /* 7€ */
+    { 0x0938,   none,   none, 0x7f00 }, /* 8  */
+    { 0x0a39,   none,   none, 0x8000 }, /* 9  */
+    { 0x0b30,   none,   none, 0x8100 }, /* 0  */
+    { 0x0c2d, 0x0c2d, 0x0c1f, 0x8200 }, /* -- */
+    {   none,   none,   none,   none }, /* =+ */
     { 0x0e08, 0x0e08, 0x0e7f, 0x0ef0 }, /* backspace */
+
     { 0x0f09, 0x0f00, 0x9400, 0xa5f0 }, /* tab */
-    { 0x1071, 0x1051, 0x1011, 0x1000 }, /* Q */
-    { 0x1177, 0x1157, 0x1117, 0x1100 }, /* W */
-    { 0x1265, 0x1245, 0x1205, 0x1200 }, /* E */
-    { 0x1372, 0x1352, 0x1312, 0x1300 }, /* R */
-    { 0x1474, 0x1454, 0x1414, 0x1400 }, /* T */
-    { 0x1579, 0x1559, 0x1519, 0x1500 }, /* Y */
-    { 0x1675, 0x1655, 0x1615, 0x1600 }, /* U */
-    { 0x1769, 0x1749, 0x1709, 0x1700 }, /* I */
-    { 0x186f, 0x184f, 0x180f, 0x1800 }, /* O */
-    { 0x1970, 0x1950, 0x1910, 0x1900 }, /* P */
-    { 0x1a5b, 0x1a7b, 0x1a1b, 0x1af0 }, /* [{ */
-    { 0x1b5d, 0x1b7d, 0x1b1d, 0x1bf0 }, /* ]} */
+    { 0x1078, 0x1058,   none, 0x1000 }, /* X */
+    { 0x1176, 0x1156, 0x115f, 0x1100 }, /* V */
+    { 0x126c, 0x124c, 0x125b, 0x1200 }, /* L */
+    { 0x1363, 0x1343, 0x135d, 0x1300 }, /* C */
+    { 0x1477, 0x1457, 0x145e, 0x1400 }, /* W */
+    { 0x156b, 0x154b, 0x1541, 0x1500 }, /* K */
+    { 0x1668, 0x1648, 0x163c, 0x1600 }, /* H */
+    { 0x1767, 0x1747, 0x173e, 0x1700 }, /* G */
+    { 0x1866, 0x1846, 0x183d, 0x1800 }, /* F */
+    { 0x1971, 0x1951, 0x1926, 0x1900 }, /* Q */
+    { 0x1adf,   none,   none, 0x1af0 }, /* ß */
+    {   none,   none,   none,   none }, /*    */
     { 0x1c0d, 0x1c0d, 0x1c0a, 0x1cf0 }, /* Enter */
+
     {   none,   none,   none,   none }, /* L Ctrl */
-    { 0x1e61, 0x1e41, 0x1e01, 0x1e00 }, /* A */
-    { 0x1f73, 0x1f53, 0x1f13, 0x1f00 }, /* S */
-    { 0x2064, 0x2044, 0x2004, 0x2000 }, /* D */
-    { 0x2166, 0x2146, 0x2106, 0x2100 }, /* F */
-    { 0x2267, 0x2247, 0x2207, 0x2200 }, /* G */
-    { 0x2368, 0x2348, 0x2308, 0x2300 }, /* H */
-    { 0x246a, 0x244a, 0x240a, 0x2400 }, /* J */
-    { 0x256b, 0x254b, 0x250b, 0x2500 }, /* K */
-    { 0x266c, 0x264c, 0x260c, 0x2600 }, /* L */
-    { 0x273b, 0x273a,   none, 0x27f0 }, /* ;: */
-    { 0x2827, 0x2822,   none, 0x28f0 }, /* '" */
-    { 0x2960, 0x297e,   none, 0x29f0 }, /* `~ */
+    { 0x1e75, 0x1e55, 0x1e5c, 0x1e00 }, /* U */
+    { 0x1f69, 0x1f49, 0x1f2f, 0x1f00 }, /* I */
+    { 0x2061, 0x2041, 0x207b, 0x2000 }, /* A */
+    { 0x2165, 0x2145, 0x217d, 0x2100 }, /* E */
+    { 0x226f, 0x224f, 0x222a, 0x2200 }, /* O */
+    { 0x2373, 0x2353, 0x233f, 0x2300 }, /* S */
+    { 0x246e, 0x244e, 0x2428, 0x2400 }, /* N */
+    { 0x2572, 0x2552, 0x2529, 0x2500 }, /* R */
+    { 0x2674, 0x2654, 0x262d, 0x2600 }, /* T */
+    { 0x2764, 0x2744, 0x273a, 0x27f0 }, /* D */
+    { 0x2879, 0x2859, 0x2840, 0x28f0 }, /* Y */
+    {   none,   none,   none,   none }, /* `~ */
     {   none,   none,   none,   none }, /* L shift */
-    { 0x2b5c, 0x2b7c, 0x2b1c, 0x2bf0 }, /* |\ */
-    { 0x2c7a, 0x2c5a, 0x2c1a, 0x2c00 }, /* Z */
-    { 0x2d78, 0x2d58, 0x2d18, 0x2d00 }, /* X */
-    { 0x2e63, 0x2e43, 0x2e03, 0x2e00 }, /* C */
-    { 0x2f76, 0x2f56, 0x2f16, 0x2f00 }, /* V */
-    { 0x3062, 0x3042, 0x3002, 0x3000 }, /* B */
-    { 0x316e, 0x314e, 0x310e, 0x3100 }, /* N */
-    { 0x326d, 0x324d, 0x320d, 0x3200 }, /* M */
-    { 0x332c, 0x333c,   none, 0x33f0 }, /* ,< */
-    { 0x342e, 0x343e,   none, 0x34f0 }, /* .> */
-    { 0x352f, 0x353f,   none, 0x35f0 }, /* /? */
+    {   none,   none,   none,   none }, /* |\ */
+    { 0x2cfc, 0x2cdc, 0x2c23, 0x2c00 }, /* Ü */
+    { 0x2df6, 0x2dd6, 0x2d24, 0x2d00 }, /* Ö */
+    { 0x2ee4, 0x2ec4, 0x2e7c, 0x2e00 }, /* Ä */
+    { 0x2f70, 0x2f50, 0x2f7e, 0x2f00 }, /* P */
+    { 0x307a, 0x305a, 0x3060, 0x3000 }, /* Z */
+    { 0x3162, 0x3142, 0x312b, 0x3100 }, /* B */
+    { 0x326d, 0x324d, 0x3225, 0x3200 }, /* M */
+    { 0x332c,   none, 0x3322, 0x33f0 }, /* , */
+    { 0x342e,   none, 0x3427, 0x34f0 }, /* . */
+    { 0x356a, 0x354a, 0x353b, 0x35f0 }, /* J */
     {   none,   none,   none,   none }, /* R Shift */
+
     { 0x372a, 0x372a, 0x9600, 0x37f0 }, /* * */
     {   none,   none,   none,   none }, /* L Alt */
     { 0x3920, 0x3920, 0x3920, 0x3920 }, /* space */
@@ -380,12 +383,12 @@ u16 ascii_to_keycode(u8 ascii)
     int i;
 
     for (i = 0; i < ARRAY_SIZE(scan_to_keycode); i++) {
-        if ((GET_GLOBAL(scan_to_keycode[i].normal) & 0xff) == ascii)
-            return GET_GLOBAL(scan_to_keycode[i].normal);
-        if ((GET_GLOBAL(scan_to_keycode[i].shift) & 0xff) == ascii)
-            return GET_GLOBAL(scan_to_keycode[i].shift);
-        if ((GET_GLOBAL(scan_to_keycode[i].control) & 0xff) == ascii)
-            return GET_GLOBAL(scan_to_keycode[i].control);
+        if ((GET_GLOBAL(scan_to_keycode[i].layer1) & 0xff) == ascii)
+            return GET_GLOBAL(scan_to_keycode[i].layer1);
+        if ((GET_GLOBAL(scan_to_keycode[i].layer2) & 0xff) == ascii)
+            return GET_GLOBAL(scan_to_keycode[i].layer2);
+        if ((GET_GLOBAL(scan_to_keycode[i].layer3) & 0xff) == ascii)
+            return GET_GLOBAL(scan_to_keycode[i].layer3);
     }
     return 0;
 }
@@ -451,6 +454,22 @@ kbd_prtscr(int key_release)
     call16_int(0x05, &br);
 }
 
+//u8 neo_layer;
+#define NEO_LAYER_2 1<<0
+#define NEO_LAYER_3 1<<1
+
+static void
+neo_set_layer(int key_release, u8 layer)
+{
+	u8 l = GET_BDA(neo_layer);
+	if (key_release)
+		l &= ~layer;
+	else
+		l |=  layer;
+
+	SET_BDA(neo_layer, l);
+}
+
 // Handle a ps2 style scancode read from the keyboard.
 static void
 __process_key(u8 scancode)
@@ -476,8 +495,9 @@ __process_key(u8 scancode)
     // Check for special keys
     switch (scancode) {
     case 0x3a: /* Caps Lock */
-        kbd_set_flag(key_release, KF0_CAPS, 0, KF0_CAPSACTIVE);
-        return;
+        //kbd_set_flag(key_release, KF0_CAPS, 0, KF0_CAPSACTIVE);
+	neo_set_layer(key_release, NEO_LAYER_3);
+	return;
     case 0x2a: /* L Shift */
         if (flags1 & KF1_LAST_E0)
             // Ignore fake shifts
@@ -496,6 +516,11 @@ __process_key(u8 scancode)
         else
             kbd_set_flag(key_release, KF0_CTRLACTIVE | KF0_LCTRL, 0, 0);
         return;
+
+    case 0x2b: /* Mod 3 */
+	neo_set_layer(key_release, NEO_LAYER_3);
+	return;
+	
     case 0x38: /* Alt */
         if (flags1 & KF1_LAST_E0)
             kbd_set_flag(key_release, KF0_ALTACTIVE, KF1_RALT, 0);
@@ -551,6 +576,53 @@ __process_key(u8 scancode)
         info = (scancode == 0x1c ? &key_ext_enter : &key_ext_slash);
     u16 flags0 = GET_BDA(kbd_flag0);
     u16 keycode;
+
+    u8 use_not_shift = flags0 & (KF0_RSHIFT|KF0_LSHIFT) ? 0 : 1;
+
+    u8 ascii = GET_GLOBAL(info->layer1) & 0xff;
+    if ((flags0 & KF0_NUMACTIVE && scancode >= 0x47 && scancode <= 0x53)
+    	|| (flags0 & KF0_CAPSACTIVE && ascii >= 'a' && ascii <= 'z'))
+            // Numlock/capslock toggles shift on certain keys
+        use_not_shift ^= 1;
+
+
+    neo_set_layer(use_not_shift, NEO_LAYER_2);
+	 
+
+    
+
+    switch (GET_BDA(neo_layer)) {
+	    case 0:
+		keycode = GET_GLOBAL(info->layer1);
+		break;
+
+	    case 1:
+	    	keycode = GET_GLOBAL(info->layer2);
+		break;
+
+            case 2:
+		keycode = GET_GLOBAL(info->layer3);
+		break;
+
+	    default:
+		keycode = none;
+		break;
+    }
+
+    if (flags1 & KF1_LAST_E0 && scancode >= 0x47 && scancode <= 0x53) {
+        /* extended keys handling */
+        if (flags0 & KF0_ALTACTIVE)
+            keycode = (scancode + 0x50) << 8;
+        else
+            keycode = (keycode & 0xff00) | 0xe0;
+    }
+
+    if (keycode)
+        enqueue_key(keycode);
+
+    return;
+
+#if 0
     if (flags0 & KF0_ALTACTIVE) {
         keycode = GET_GLOBAL(info->alt);
     } else if (flags0 & KF0_CTRLACTIVE) {
@@ -576,6 +648,7 @@ __process_key(u8 scancode)
     }
     if (keycode)
         enqueue_key(keycode);
+#endif   
 }
 
 void
