@@ -323,9 +323,9 @@ static struct scaninfo {
     {   none,   none,   none,   none }, /* `~ */
     {   none,   none,   none,   none }, /* L shift */
     {   none,   none,   none,   none }, /* |\ */
-    { 0x2cfc, 0x2cdc, 0x2c23, 0x2c00 }, /* Ü */
-    { 0x2df6, 0x2dd6, 0x2d24, 0x2d00 }, /* Ö */
-    { 0x2ee4, 0x2ec4, 0x2e7c, 0x2e00 }, /* Ä */
+    { 0x2c81, 0x2c9a, 0x2c23, 0x2c00 }, /* Ü */
+    { 0x2d94, 0x2d99, 0x2d24, 0x2d00 }, /* Ö */
+    { 0x2e84, 0x2e8e, 0x2e7c, 0x2e00 }, /* Ä */
     { 0x2f70, 0x2f50, 0x2f7e, 0x2f00 }, /* P */
     { 0x307a, 0x305a, 0x3060, 0x3000 }, /* Z */
     { 0x3162, 0x3142, 0x312b, 0x3100 }, /* B */
@@ -609,6 +609,7 @@ __process_key(u8 scancode)
 		break;
     }
 
+#if 1
     if (flags1 & KF1_LAST_E0 && scancode >= 0x47 && scancode <= 0x53) {
         /* extended keys handling */
         if (flags0 & KF0_ALTACTIVE)
@@ -620,9 +621,8 @@ __process_key(u8 scancode)
     if (keycode)
         enqueue_key(keycode);
 
-    return;
 
-#if 0
+#else
     if (flags0 & KF0_ALTACTIVE) {
         keycode = GET_GLOBAL(info->alt);
     } else if (flags0 & KF0_CTRLACTIVE) {
@@ -633,7 +633,7 @@ __process_key(u8 scancode)
         if ((flags0 & KF0_NUMACTIVE && scancode >= 0x47 && scancode <= 0x53)
             || (flags0 & KF0_CAPSACTIVE && ascii >= 'a' && ascii <= 'z'))
             // Numlock/capslock toggles shift on certain keys
-            useshift ^= 1;
+            //useshift ^= 1;
         if (useshift)
             keycode = GET_GLOBAL(info->shift);
         else
@@ -649,6 +649,7 @@ __process_key(u8 scancode)
     if (keycode)
         enqueue_key(keycode);
 #endif   
+    return;
 }
 
 void
